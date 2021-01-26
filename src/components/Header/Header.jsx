@@ -1,44 +1,38 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 
-class Header extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+const Header = function (props) {
+    const leftBlock = localStorage.getItem("token") ? <ul className="navbar-nav mr-auto">
+        <li className="nav-item">
+            <a className="nav-link" href="/users">Пользователи</a>
+        </li>
+    </ul> : '';
 
-    render() {
-        return (
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                <a className="navbar-brand" href="#">Flask Simple App</a>
+    const rightBlock = localStorage.getItem("token") ?
+        <ul className="navbar-nav ml-auto">
+            <li className="nav-item mr-3"><Link className="nav-link" to="#">{localStorage.getItem("username")}</Link></li>
+            <li className="nav-item"><Link className="nav-link" onClick={props.logOut} to="/">выход</Link></li>
+        </ul> : <ul className="navbar-nav ml-auto">
+            <li className="nav-item">
+                <Link className="nav-link" to="/login">Вход</Link>
+            </li>
+        </ul>;
 
-                <ul className="navbar-nav mr-auto">
-                    <li className="nav-item">
-                        <a className="nav-link" href="/">Главная</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="/tasks">Задачи</a>
-                    </li>
-                </ul>
-
-                <ul className="navbar-nav ml-auto">
-                    {/*{if (props.user) }*/}
-                    {/*<li className="nav-item">*/}
-                    {/*    <a className="nav-link" href="#"><i className="fas fa-user-circle"></i> {{user.email}}</a>*/}
-                    {/*</li>*/}
-                    {/*<li className="nav-item">*/}
-                    {/*    <a className="nav-link" href="/logout"><i className="fas fa-sign-out-alt"></i> Выход</a>*/}
-                    {/*</li>*/}
-                    {/*{% else %}*/}
-                    <li className="nav-item">
-                        <a className="nav-link" href="/login"><i className="fas fa-sign-in-alt"></i> Вход</a>
-                    </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="/registration"><i
-                            className="fas fa-user-plus"></i> Регистрация</a>
-                    </li>
-                </ul>
-            </nav>
-        )
-    }
-}
+    return (
+        <div className="container-fluid h-auto">
+            <div className="row bg-light h-auto">
+                <div className="container">
+                    <div className="row">
+                        <nav className="navbar px-0 navbar-expand-lg navbar-light col-12">
+                            <Link className="navbar-brand" to="/">Empasoft test task</Link>
+                            {leftBlock}
+                            {rightBlock}
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+};
 
 export default Header;
